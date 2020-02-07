@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+        <EditText
+            android:id="@+id/userNameId"
+            android:hint="UserName"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:imeOptions="actionNext"
+            android:inputType="textEmailAddress"
+            android:layout_width="match_parent"
+            android:drawablePadding="5dp"
+            android:layout_height="wrap_content"/>
+
+
+        <EditText
+            android:drawablePadding="5dp"
+            android:padding="10dp"
+            android:id="@+id/userPasswordId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:singleLine="true"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword" />
+
+        <LinearLayout
+            android:padding="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:checked="true"
+                android:id="@+id/checkboxId"
+                android:layout_height="wrap_content"
+                android:text="Remember Me"/>
+            <TextView
+                android:text="Forgot Password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/loginButtonId"
+            android:text="Login"
+            android:layout_gravity="right"
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Don't have an account ?" />
+
+            <TextView
+
+                android:id="@+id/registerTextViewId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-thin"
+                android:text=" Register"
+                android:textColor="#E90F0F"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
