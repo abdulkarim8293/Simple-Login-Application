@@ -34,16 +34,9 @@ public class PrefManager {
     //Create login session
     public void createUserLoginSession(String uName, String uEmail){
 
-        // Storing name in preferences
         editor.putString(KEY_NAME, (String) uName);
-
-        // Storing email in preferences
         editor.putString(KEY_EMAIL, (String) uEmail);
-
-        // Storing login value as TRUE
         editor.putBoolean(IS_USER_LOGIN, true);
-
-        // commit changes
         editor.commit();
     }
 
