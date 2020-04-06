@@ -40,7 +40,7 @@
             android:inputType="textPassword" />
 
         <Button
-            android:id="@+id/loginButton"
+            android:id="@+id/registerButton"
             android:text="Register"
             android:layout_gravity="right"
             android:layout_margin="10dp"
