@@ -26,11 +26,16 @@ public class LoginActivity extends AppCompatActivity {
 
         init();
 
+        if (loginSession.isUserLoggedIn()){
+            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+            finish();
+        }
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                verifyUserInput();
+                createUserLogin();
             }
         });
 
@@ -53,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         inputValidation = new InputValidation();
     }
 
-    private void verifyUserInput(){
+    private void createUserLogin(){
 
         if (!inputValidation.isEmptyEditText(userName,"Please Enter Your Email")) {
             return;
@@ -66,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
-        loginSession.createUserLoginSession(userName.getText().toString(), password.getText().toString());
+        loginSession.createLoginSession(userName.getText().toString(), password.getText().toString());
         startActivity(new Intent(LoginActivity.this, MainActivity.class));
         finish();
     }

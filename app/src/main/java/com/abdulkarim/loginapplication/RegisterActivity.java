@@ -30,7 +30,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                createUser();
+                createUserForLogin();
             }
         });
 
@@ -42,7 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void createUser() {
+    private void createUserForLogin() {
 
         if (!inputValidation.isEmptyEditText(userName, "Please Enter Your Email")) {
             return;
@@ -60,11 +60,10 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        Toast.makeText(this, "Registration Successful", Toast.LENGTH_SHORT).show();
-        loginSession.createUser(userName.getText().toString(),password.getText().toString());
+        Toast.makeText(this, "Registration \nAnd Login Successful", Toast.LENGTH_SHORT).show();
+        loginSession.createLoginSession(userName.getText().toString(),password.getText().toString());
         startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
         finish();
-
     }
 
     private void init() {
