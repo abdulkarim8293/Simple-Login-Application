@@ -16,14 +16,13 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginButton;
     private TextView registerTextView;
 
-    private PrefManager prefManager;
+    private LoginSession loginSession;
+    private InputValidation inputValidation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        prefManager = new PrefManager(this);
 
         init();
 
@@ -31,20 +30,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-
-                String uName = userName.getText().toString().trim();
-                String uPassword = password.getText().toString().trim();
-
-                if (!uName.matches(emailPattern)) {
-                    Toast.makeText(LoginActivity.this, "Enter Valid Email Address", Toast.LENGTH_SHORT).show();
-                } else if (uPassword.length() < 6) {
-                    Toast.makeText(LoginActivity.this, "Wrong Password", Toast.LENGTH_SHORT).show();
-                } else {
-                    prefManager.createUserLoginSession(uName, uPassword);
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                    finish();
-                }
+                verifyUserInput();
             }
         });
 
@@ -57,9 +43,31 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void init() {
+
         userName = findViewById(R.id.userNameEditText);
         password = findViewById(R.id.passwordEditText);
         loginButton = findViewById(R.id.loginButton);
         registerTextView = findViewById(R.id.registerTextViewId);
+
+        loginSession = new LoginSession(this);
+        inputValidation = new InputValidation();
+    }
+
+    private void verifyUserInput(){
+
+        if (!inputValidation.isEmptyEditText(userName,"Please Enter Your Email")) {
+            return;
+        }
+        if (!inputValidation.isValidEmail(userName,"Enter Valid Email Address")) {
+            return;
+        }
+        if (!inputValidation.isEmptyEditText(password,"Please Enter Your Password")) {
+            return;
+        }
+
+        Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
+        loginSession.createUserLoginSession(userName.getText().toString(), password.getText().toString());
+        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        finish();
     }
 }

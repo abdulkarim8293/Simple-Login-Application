@@ -12,56 +12,70 @@ import android.widget.Toast;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    private EditText userName, password, retypePassword;
     private Button registerButton;
-    private EditText userNameEditText, passwordEditText,retypePasswordEditText;
     private TextView loginTextView;
 
-    private PrefManager prefManager;
+    private InputValidation inputValidation;
+    private LoginSession loginSession;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registar);
 
-        prefManager = new PrefManager(this);
-
         init();
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
-                String userName = userNameEditText.getText().toString().trim();
-                String userPassword = passwordEditText.getText().toString().trim();
-                String userRetypePassword = retypePasswordEditText.getText().toString().trim();
-
-                if (!userName.matches(emailPattern)){
-                    Toast.makeText(RegisterActivity.this, "Enter Valid Email Address", Toast.LENGTH_SHORT).show();
-                }else if (!userPassword.equals(userRetypePassword)){
-                    Toast.makeText(RegisterActivity.this, "Password Not Match", Toast.LENGTH_SHORT).show();
-                }else {
-
-                    prefManager.createUserLoginSession(userName,userPassword);
-                    startActivity(new Intent(RegisterActivity.this,MainActivity.class));
-                    finish();
-
-                }
+                createUser();
             }
         });
 
         loginTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
+                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
             }
         });
     }
 
+    private void createUser() {
+
+        if (!inputValidation.isEmptyEditText(userName, "Please Enter Your Email")) {
+            return;
+        }
+        if (!inputValidation.isValidEmail(userName, "Enter Valid Email Address")) {
+            return;
+        }
+        if (!inputValidation.isEmptyEditText(password, "Please Enter Your Password")) {
+            return;
+        }
+        if (!inputValidation.isEmptyEditText(retypePassword, "Please Enter Confirm Password")) {
+            return;
+        }
+        if (!inputValidation.isPasswordMatches(password, retypePassword, "Don't Match Your Password")) {
+            return;
+        }
+
+        Toast.makeText(this, "Registration Successful", Toast.LENGTH_SHORT).show();
+        loginSession.createUser(userName.getText().toString(),password.getText().toString());
+        startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+        finish();
+
+    }
+
     private void init() {
+
         registerButton = findViewById(R.id.registerButton);
-        userNameEditText = findViewById(R.id.userNameEditText);
-        passwordEditText = findViewById(R.id.passwordEditText);
+        userName = findViewById(R.id.userNameEditText);
+        password = findViewById(R.id.passwordEditText);
+        retypePassword = findViewById(R.id.retypePasswordEditText);
         loginTextView = findViewById(R.id.registerTextViewId);
+
+        inputValidation = new InputValidation();
+        loginSession = new LoginSession(this);
     }
 }

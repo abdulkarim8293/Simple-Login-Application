@@ -6,43 +6,40 @@ import android.content.SharedPreferences;
 
 import java.util.HashMap;
 
-public class PrefManager {
+public class LoginSession {
+
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
     private int PRIVATE_MODE = 0;
     private Context context;
 
-    // Shared preferences file name
-    public static final String PREFER_NAME = "";
-
-    // All Shared Preferences Keys
+    public static final String PREFER_NAME = "UserLoginSession";
     public static final String IS_USER_LOGIN = "IsUserLoggedIn";
+    public static final String KEY_USER_NAME = "user_name";
+    public static final String KEY_USER_PASSWORD = "password";
 
-    // User name (make variable public to access from outside)
-    public static final String KEY_NAME = "name";
-
-    // Email address (make variable public to access from outside)
-    public static final String KEY_EMAIL = "email";
-
-    // Constructor
-    public PrefManager(Context context){
+    public LoginSession(Context context) {
         this.context = context;
         sp = context.getSharedPreferences(PREFER_NAME, PRIVATE_MODE);
         editor = sp.edit();
     }
 
-    //Create login session
-    public void createUserLoginSession(String uName, String uEmail){
-
-        editor.putString(KEY_NAME, (String) uName);
-        editor.putString(KEY_EMAIL, (String) uEmail);
+    public void createUserLoginSession(String userName, String password) {
+        editor.putString(KEY_USER_NAME, (String) userName);
+        editor.putString(KEY_USER_PASSWORD, (String) password);
         editor.putBoolean(IS_USER_LOGIN, true);
         editor.commit();
     }
 
-    public boolean checkLogin(){
+    public void createUser(String userName, String password) {
+        editor.putString(KEY_USER_NAME, (String) userName);
+        editor.putString(KEY_USER_PASSWORD, (String) password);
+        editor.commit();
+    }
+
+    public boolean checkLogin() {
         // Check login status
-        if(!this.isUserLoggedIn()){
+        if (!this.isUserLoggedIn()) {
 
             // user is not logged in redirect him to Login Activity
             Intent i = new Intent(context, LoginActivity.class);
@@ -63,17 +60,17 @@ public class PrefManager {
 
     /**
      * Get stored session data
-     * */
-    public HashMap<String, String> getUserDetails(){
+     */
+    public HashMap<String, String> getUserDetails() {
 
         //Use hashmap to store user credentials
         HashMap<String, String> user = new HashMap<String, String>();
 
         // user name
-        user.put(KEY_NAME, sp.getString(KEY_NAME, null));
+        user.put(KEY_USER_NAME, sp.getString(KEY_USER_NAME, null));
 
         // user email id
-        user.put(KEY_EMAIL, sp.getString(KEY_EMAIL, null));
+        user.put(KEY_USER_PASSWORD, sp.getString(KEY_USER_PASSWORD, null));
 
         // return user
         return user;
@@ -81,8 +78,8 @@ public class PrefManager {
 
     /**
      * Clear session details
-     * */
-    public void logoutUser(){
+     */
+    public void logoutUser() {
 
         // Clearing all user data from Shared Preferences
         editor.clear();
@@ -102,7 +99,7 @@ public class PrefManager {
     }
 
     // Check for login
-    public boolean isUserLoggedIn(){
+    public boolean isUserLoggedIn() {
         return sp.getBoolean(IS_USER_LOGIN, false);
     }
 }

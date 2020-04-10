@@ -32,9 +32,10 @@
             android:inputType="textPassword" />
 
         <EditText
+            android:id="@+id/retypePasswordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Confrim - Password"
+            android:hint="Confirm - Password"
             android:singleLine="true"
             android:imeOptions="actionDone"
             android:inputType="textPassword" />
